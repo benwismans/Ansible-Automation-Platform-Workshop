@@ -1,4 +1,4 @@
-== Lab 10: Tower Job tags
+== Lab 10: AWX Job tags
 
 ``Job tags`` zijn handig om in lange playbooks enkele onderdelen uit te voeren. Meer informatie over tags vind je terug op: https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html
 
