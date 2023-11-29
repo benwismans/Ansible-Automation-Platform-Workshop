@@ -1,6 +1,6 @@
-## Lab 9: Tower Variabelen
+## Lab 9: A Variabelen
 
-In Ansible Tower kun je op diverse manieren variabelen gebruiken. De best-practice is om de variabelen in de ``Hosts`` en ``Groups`` van de inventory te zetten. 
+In AWX kun je op diverse manieren variabelen gebruiken. De best-practice is om de variabelen in de ``Hosts`` en ``Groups`` van de inventory te zetten. 
 
 Het is echter ook mogelijk om de variabelen bij het playbook in de SCM te zetten. Bijkomend voordeel daarvan is dat er meteen versiebeheer aanwezig is. De variabelen worden dan gezet in de directory ``group_vars`` of ``host_vars``, net zoals je met Ansible Engine zou doen.
 
