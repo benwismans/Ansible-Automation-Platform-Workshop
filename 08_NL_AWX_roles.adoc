@@ -1,10 +1,10 @@
-## Lab 8 Tower roles
+## Lab 8 AWX Roles
 
-In Ansible Tower kun je, net als Ansible Engine, roles gebruiken om je playbooks te vereenvoudigen. Deze roles kunnen in de directory ``roles`` bij het playbook project gezet worden (in je ``SCM``, ofwel gitlab in deze workshop). In de praktijk is het gebruikelijk dat roles in een apart project gezet worden. Het is zelfs mogelijk om Ansible Tower roles rechtstreeks van Ansible Galaxy te laten downloaden. In beide gevallen definieer je de role in de file ``roles/requirements.yml``. De blog op https://www.ansible.com/blog/using-ansible-and-ansible-tower-with-shared-roles legt uit hoe dat precies werkt.
+In AWX kun je, net als Ansible Engine, roles gebruiken om je playbooks te vereenvoudigen. Deze roles kunnen in de directory ``roles`` bij het playbook project gezet worden (in je ``SCM``, ofwel Azure DevOps in deze workshop). In de praktijk is het gebruikelijk dat roles in een apart project gezet worden. Het is zelfs mogelijk om AWX roles rechtstreeks van Ansible Galaxy te laten downloaden. In beide gevallen definieer je de role in de file ``roles/requirements.yml``. De blog op https://www.ansible.com/blog/using-ansible-and-ansible-tower-with-shared-roles legt uit hoe dat precies werkt.
 
 ### Task 8.1 Playbook met role toevoegen
 
-* Log in op ``Gitlab`` en voeg de volgende 2 files toe (Kijk eventueel terug in link:01_NL_gitlab[Lab 1]):
+* Log in op ``Azure Devops`` en voeg de volgende 2 files toe (Kijk eventueel terug in Lab 1):
 * ``loadbalancer-role.yml``:
 +
 [source,role=copypaste]
