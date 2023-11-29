@@ -1,10 +1,10 @@
-## Lab 1: Gitlab inrichten
+## Lab 1: SCM inrichten
 
 Het is een best-practice om Ansible Tower te gebruiken in combinatie met een ``SCM`` (Source Control Management). Enkele voorbeelden zijn:
 
 * Git
 * Subversion
-* Red Hat Insights
+* Azure Devops
 
 Alle playbooks, roles etc. van Ansible worden in deze ``SCM`` gezet. Ansible Tower download dan automatisch de laatste versie van het project, voordat een playbook wordt gestart. Bijkomend voordeel van een SCM is dat alle wijzigingen inzichtelijk zijn (wie heeft wat, wanneer gewijzigd).
 
