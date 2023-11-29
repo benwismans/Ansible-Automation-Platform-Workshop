@@ -1,0 +1,52 @@
+## Lab 4: Tower Project
+
+In Ansible Tower is de Git repository een ``Project``.
+
+### Task 4.1: SCM credential aanmaken
+
+* Maak een nieuwe credential aan (zie link:03_NL_tower_credential[Lab 3 Tower Credentials]).
+** Zet Credential type: Source Control
+** Vul bij ``Username`` en ``Password`` de gitlab token in die je in Task 1.2 hebt aangemaakt
+
+### Task 4.2: Project aanmaken
+
+* Klik ``Projects`` (linkerkant)
+* Klik rechtsboven op het groene plus teken (``Create a new project``)
+<project_01.png>
+* Geef het project de naam ``Gitlab``
+* Zet ``SCM type`` op ``Git``
+* Vul bij ``SCM URL`` de URL van de Git repository in uit ``task 1.3``.
+* Kies bij ``SCM Credential`` de credential uit ``task 4.1``
+* Vink alle ``SCM Update Options`` aan:
+** ``Clean``
+** ``Delete on Update```
+** ``Update revision on launch``
++
+====
+[#project_01.png]
+.Project
+image::project_01.png[project]
+====
+
+
+### Task 4.3: Test de werking
+
+Na het aanmaken van het SCM project, kan de werking getest worden. 
+
+* Klik achter het project op het ververs icoontje
++
+====
+[#project_02.png]
+.Project refresh
+image::project_02.png[project]
+====
+
+Het bolletje voor het project zal nu groen gaan knipperen tot het project succesvol is opgehaald. Zodra het bolletje groen blijft is het project succesvol gecloned.
+
+* Klik op het groene bolletje om de details van de job te bekijken
++
+====
+[#project_03.png]
+.Project details
+image::project_03.png[project]
+====

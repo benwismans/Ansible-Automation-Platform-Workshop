@@ -1,0 +1,119 @@
+## Lab 6 Tower jobs
+In Ansible Tower kan een job handmatig via het onderdeel ``templates`` gestart worden. Daarnaast is het mogelijk om jobs gepland te starten door een ``schedule`` te configureren in de template.
+
+
+### Task 6.1 Job uitvoeren
+
+* Klik ``Templates`` (linkerkant)
+* klik op het ``raket icoon``. De job start nu automatisch.
++
+====
+[#job_01.png]
+.Start job
+image::job_01.png[job]
+====
++
+* Aan de linkerkant vind je de details van de job
++
+====
+[#job_02.png]
+.Job details
+image::job_02.png[job]
+====
++
+* Aan de rechterkant vind je het resultaat van de job
++
+====
+[#job_03.png]
+.Job results
+image::job_03.png[job]
+====
++
+TIP: De output uit het result venster herken je van ``Ansible Engine``
+* Als alles goed is gegaan, dan is de status ``Successful``
+
+### Task 6.2 Job status inzien
+* Ga terug naar ``Templates`` (Linkerkant)
+* Achter de ``template`` zijn nu eén of meerdere blokjes gevuld
++
+image::job_04.png[job]
++
+[TIP]
+====
+De blokjes kunnen de volgende toestanden aangeven:
+
+* Knipperend: Job heeft status ``running``
+* Groen: Job is gelukt
+* Rood: Job is mislukt
+====
++
+* Klik op een ``groen`` of ``rood`` blokje om de details van die job in te zien.
+
+Een overzicht van alle jobs vind je terug onder ``Jobs``.
+
+* Kies ``Jobs`` (linkerkant)
+* In dit overzicht kun je de details van de job inzien, of de job opnieuw uitvoeren
++
+====
+[#job_05.png]
+.Jobs
+image::job_05.png[job]
+====
++
+* Bekijk de details van een oude job
+* Klik op een ``raket`` om een job opnieuw uit te voeren
+
+[TIP]
+====
+Het type van de job wordt met een label weergegeven.
+
+* ``Playbook Run``: Een playbook
+* ``SCM Update``: Een update van het project (in deze workshop het Git project uit link:04_NL_tower_project[Lab 4])
+====
+
+### Task 6.3 Job met andere parameters starten
+Met de ``Limit`` functie van de template kun je beperken op welke client de job wordt uitgevoerd. 
+
+* Kies ``Templates`` (linkerkant)
+* Open de template
+* Vul bij ``limit`` de fqdn in van één van de clients (bijvoorbeeld: {{ ANSIBLE_CLIENT_1 }}
+* Klik ``Save`` en voer de template uit.
+
+Je kunt de template ook instellen dat deze elke keer vraagt naar de waarde uit een bepaald veld.
+
+* Bewerk de ``template`` opnieuw
+* Verwijder de waarde uit het veld ``limit``
+* Vink achter ``Inventory`` het vinkje ``Prompt on launch`` aan
+
+Om de werking te kunnen demonstreren moeten we eerst meerdere inventories hebben. We gebruiken een  ``Smart inventory``, zodat we bestaande hosts uit de inventory ``workshop-inventory`` kunnen hergebruiken:
+
+* Voer de job opnieuw uit. De job vraagt nu om een inventory.
+* Kies ``Webservers`` en klik ``Next`` en ``Launch`` om de job uit te voeren.
++
+====
+[#job_06.png]
+.Jobs
+image::job_06.png[job]
+====
++
+* Controleer in de job result of de job nu alleen op de webservers ({{ ANSIBLE_CLIENT_1 }} en {{ ANSIBLE_CLIENT_2 }}) wordt uitgevoerd.
+
+### Task 6.4 Job gepland uitvoeren
+Het is mogelijk om templates periodiek uit te voeren. In de praktijk wordt dit bijvoorbeeld gebruikt om systemen in een "desired state" te houden. Denk bijvoorbeeld aan een playbook met security settings. In zo'n playbook kan bijvoorbeeld gedefinieerd zijn dat de firewall gestart moet zijn (``state: started``). Een beheerder kan tijdens een troubleshooting sessie deze firewall handmatig uitzetten, maar later vergeten om deze weer aan te zetten. Als de security job periodiek loopt (bijvoorbeeld 4x per dag), dan zal de firewall automatisch weer gestart worden, zodra de het security playbook uitgevoerd wordt.
+
+* Bewerk de ``template``
+* Zet bij ``Inventory`` het vinkje ``Prompt on Launch`` weer uit
++
+CAUTION: Vergeet niet om ``Pompt on Launch`` uit te zetten!
++
+* Klik ``Save``
+* Open de template opnieuw
+* Kies ``Schedules``
+* Klik op het groene plusje (rechtsboven)
+* Vul in:
+** Name: ``Hello world``
+** Start time: Kies een willekeurige start tijd, anders lopen de jobs van andere cursisten op hetzelfde tijdstip
+** Repeat frequency: ``Hour``
++
+TIP: De default frequency is nu 1x per uur.
+

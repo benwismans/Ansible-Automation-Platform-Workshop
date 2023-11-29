@@ -1,0 +1,180 @@
+== Lab 10: Tower Job tags
+
+``Job tags`` zijn handig om in lange playbooks enkele onderdelen uit te voeren. Meer informatie over tags vind je terug op: https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html
+
+=== Task 10.1: Voorbereiding
+
+* Maak op ``gitlab`` het lange playbook ``tags.yml``:
++
+[source,role=copypaste]
+----
+---
+- hosts: all
+
+  tasks:
+  - name: "Ensure apache is installed"
+    yum:
+      name: httpd 
+      state: latest
+    tags: 
+    - webserver  
+
+  - name: "Ensure apache service is enabled and started"
+    systemd:
+      name: httpd
+      enabled: true
+      state: started
+    tags: 
+    - webserver  
+
+  - name: "Ensure firewall is configured"
+    firewalld:
+      service: "{{ WORKAROUND_ITEM }}"
+      permanent: yes
+      immediate: yes
+      state: enabled
+    with_items:
+      - http
+      - https
+    tags: 
+    - webserver  
+
+  - name: "Ensure index.html is installed in webserver root"
+    copy:
+      content: "This is server {{ WORKAROUND_FQDN }}"
+      dest: "/var/www/html/index.html"
+    tags: 
+    - webserver  
+
+  - name: "Check the status of the webserver"
+    local_action:
+      module: uri
+      url: "http://{{ WORKAROUND_INVENTORY_HOSTNAME }}/index.html"
+      status_code: 200            
+    tags: 
+    - webserver  
+
+  - name: "Ensure index.html is removed from the webserver root"
+    file:
+      path: "/var/www/html/index.html"
+      state: absent
+    tags: 
+    - webserver-rollback  
+
+  - name: "Ensure apache service is stopped and disabled"
+    systemd:
+      name: httpd
+      enabled: false
+      state: stopped
+    tags: 
+    - webserver-rollback  
+
+  - name: "Ensure the firewall rules are removed"
+    firewalld:
+      service: "{{ WORKAROUND_ITEM }}"
+      permanent: yes
+      immediate: yes
+      state: disabled
+    with_items:
+      - http
+      - https
+    tags: 
+    - webserver-rollback  
+
+  - name: "Ensure apache is removed"
+    yum:
+      name: httpd
+      state: absent
+    tags: 
+    - webserver-rollback  
+
+  - name: "Ensure haproxy is installed"
+    yum:
+      name: haproxy
+      state: latest
+    tags: 
+    - loadbalancer 
+
+  - name: "Ensure haproxy service is enabled and started"
+    systemd:
+      name: haproxy
+      enabled: true
+      state: started
+    tags: 
+    - loadbalancer 
+
+  - name: "Ensure firewall is configured"
+    firewalld:
+      service: "{{ WORKAROUND_ITEM }}"
+      permanent: yes
+      immediate: yes
+      state: enabled
+    with_items:
+      - http
+      - https
+    tags: 
+    - loadbalancer 
+
+  - name: Ensure chrony is installed
+    yum:
+      name: chrony
+      state: latest
+    tags: 
+    - ntp
+    
+  - name: Ensure chrony is configured
+    copy:
+      content: >
+        server 0.centos.pool.ntp.org iburst
+        server 1.centos.pool.ntp.org iburst
+        server 2.centos.pool.ntp.org iburst
+        server 3.centos.pool.ntp.org iburst
+        driftfile /var/lib/chrony/drift
+        makestep 1.0 3
+        rtcsync
+        logdir /var/log/chrony    
+      dest: /etc/chrony.conf
+    tags: 
+    - ntp
+    
+  - name: Ensure chrony is enabled and started
+    systemd:
+      name: chronyd
+      state: started
+      enabled: yes
+    tags: 
+    - ntp
+----
+
+=== Task 10.2: Template in Tower
+
+* Maak een ``Job template`` aan: ``Webserver tags``
+** Inventory: ``Webservers``
+** Playbook: ``tags.yml``
+** Credential: ``{{ ANSIBLE_USER }}``
+** Vink aan: ``Enable Privilege Escalation``
++
+NOTE: Vergeet niet dat je eerst het ``project`` ``gitlab`` moet verversen, voordat het playbook ``tags.yml`` zichtbaar wordt
++
+* Voeg de volgende ``tags`` toe in de template:
+** ``webserver``
+** ``ntp``
++
+NOTE: Het veld ``JOB TAGS`` is niet echt gebruiksvriendelijk gemaakt. Het invoeren werkt het beste door na elke tag op ``enter`` te drukken.
++
+* Doe het zelfde voor de ``Job template``: ``Loadbalancer tags``
+** Inventory: ``Loadbalancers``
+** Playbook: ``tags.yml``
+** Credential: ``{{ ANSIBLE_USER }}``
+** Vink aan: ``Enable Privilege Escalation``
+* Voeg de volgende ``tags`` toe in de template:
+** ``loadbalancer``
+** ``ntp``
+
+=== Task 10.3: Jobs uitvoeren
+Voer beide templates (``Webserver tags`` en ``Loadbalancer tags``) uit en controleer of de juiste taken op de juiste server worden uitgevoerd
+
+TIP: Als je geen tags opgeeft in de template, worden alle taken uitgevoerd.
+
+
+

@@ -1,0 +1,81 @@
+## Lab 11: Tower Vault
+
+In Ansible Tower is het uiteraard mogelijk om ``Ansible Vault`` te gebruiken om met gevoellige gegevens te werken.
+
+### Task 11.1: Voorbereiding
+
+* Maak op ``Gitlab`` een nieuw playbook ``webserver-secure.yml`` aan:
++
+[source,role=copypaste]
+----
+---
+- hosts: all
+  vars:
+    content_encrypted: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          34633338373262326332623337663166336138373638356630323166353334363536323765396266
+          3036626263656665346166656234343432626534383430660a333662383765663232353934623236
+          38616134393966366664306362303939643139656535366536383534616264363739373766613938
+          3766346431633737310a393731386130653338396464623665353564636162353735643864316333
+          63343231383335383964316166623963323935323038353365343232663262326566
+
+  tasks:
+  - name: "Ensure apache is installed"
+    yum:
+      name: httpd 
+      state: latest
+
+  - name: "Ensure apache service is enabled and started"
+    systemd:
+      name: httpd
+      enabled: true
+      state: started
+
+  - name: "Ensure firewall is configured"
+    firewalld:
+      service: "{{ WORKAROUND_ITEM }}"
+      permanent: yes
+      immediate: yes
+      state: enabled
+    with_items:
+      - http
+      - https
+
+  - name: "Ensure index.html is installed in webserver root"
+    copy:
+      content: "{{ WORKAROUND_CONTENT }}"
+      dest: "/var/www/html/secure.html"
+----
+
+In ``Ansible Tower``:
+
+* Ververs het project ``Gitlab``
+* Maak een nieuwe template ``Webservers secure``:
+** Inventory: ``Webservers``
+** Playbook: ``webserver-secure.yml``
+** Credential: ``{{ ANSIBLE_USER }}``
+** Vink aan: ``Enable Privilege Escalation``
+
+
+### Task 11.2: Template uitvoeren
+
+* Voer het playbook ``Webservers secure`` uit.
+
+NOTE: Het playbook failed met de foutmelding ``Attempting to decrypt but no vault secrets found``. We hebben namelijk nog geen wachtwoord opgegeven voor de encrypted string.
+
+* Open ``Credentials`` en voeg een nieuwe credential toe: ``Vault``
+* Zet ``Credential type`` op ``Vault``
++
+Note: Het type ``Vault`` staat op de 3e pagina
++
+* Gebruik het ``Vault password``: ``workshop``
+* In de ``Template`` ``Webserver secure`` kun je nu de ``Credential`` ``Vault`` toevoegen. Zet daarvoor de ``Credential Type`` op ``Vault``.
+* Voer de template uit
+* Als alles goed is gegaan dan moet op deze URL de geheime boodschap verschijnen: http://{{ ANSIBLE_CLIENT_1 }}/secure.html
+
+[TIP]
+====
+In het veld ``Credential`` kun je meerdere credentials zetten. Het is zelfs mogelijk om meerdere ``Vault`` passwords toe te voegen. In de ``Credential`` voeg je dan een ``Vault identifier`` in. Deze identier kun je met de parameter ``--vault-id`` aan het commando ``ansible-vault`` meegeven.
+====
+
+

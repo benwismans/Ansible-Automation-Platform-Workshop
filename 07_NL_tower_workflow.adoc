@@ -1,0 +1,205 @@
+## Lab 7 Tower workflows
+In Ansible Tower kunnen templates gecombineerd worden tot een workflow. In deze workflow is vervolgens te definieren wanneer de volgende job uitgevoerd dient te worden. De 3 opties daarvoor zijn:
+
+* Always
+* On Success
+* On Failure
+
+Het is bijvoorbeeld mogelijk om een job te starten. Afhankelijk van de uitkomst kan dan een volgende job gestart worden (``On Success``) of bijvoorbeeld een rollback uitgevoerd worden (``On Failure``).
+
+
+### Task 7.1 Voorbereiding
+
+Voordat we een workflow kunnen maken, hebben we meerdere ``templates`` (playbooks) nodig:
+
+* Log in op ``Gitlab`` en voeg de volgende 3 files toe (Kijk eventueel terug in link:01_NL_gitlab[Lab 1]):
+* ``webservers.yml``
++
+[source,role=copypaste]
+----
+---
+- hosts: all
+
+  tasks:
+  - name: "Ensure apache is installed"
+    yum:
+      name: httpd 
+      state: latest
+
+  - name: "Ensure apache service is enabled and started"
+    systemd:
+      name: httpd
+      enabled: true
+      state: started
+
+  - name: "Ensure firewall is configured"
+    firewalld:
+      service: "{{ WORKAROUND_ITEM }}"
+      permanent: yes
+      immediate: yes
+      state: enabled
+    with_items:
+      - http
+      - https
+
+  - name: "Ensure index.html is installed in webserver root"
+    copy:
+      content: "This is server {{ WORKAROUND_FQDN }}"
+      dest: "/var/www/html/index.html"
+
+  - name: "Check the status of the webserver"
+    local_action:
+      module: uri
+      url: "http://{{ WORKAROUND_INVENTORY_HOSTNAME }}/index.html"
+      status_code: 200            
+----
++
+* ``webservers-rollback.yml``
++
+[source,role=copypaste]
+----
+---
+- hosts: all
+
+  tasks:
+  - name: "Ensure index.html is removed from the webserver root"
+    file:
+      path: "/var/www/html/index.html"
+      state: absent
+
+  - name: "Ensure apache service is stopped and disabled"
+    systemd:
+      name: httpd
+      enabled: false
+      state: stopped
+
+  - name: "Ensure the firewall rules are removed"
+    firewalld:
+      service: "{{ WORKAROUND_ITEM }}"
+      permanent: yes
+      immediate: yes
+      state: disabled
+    with_items:
+      - http
+      - https
+
+  - name: "Ensure apache is removed"
+    yum:
+      name: httpd
+      state: absent
+----
++
+* ``loadbalancer.yml``
++
+[source,role=copypaste]
+----
+---
+- hosts: all
+
+  tasks:
+  - name: "Ensure haproxy is installed"
+    yum:
+      name: haproxy
+      state: latest
+
+  - name: "Ensure haproxy service is enabled and started"
+    systemd:
+      name: haproxy
+      enabled: true
+      state: started
+
+  - name: "Ensure firewall is configured"
+    firewalld:
+      service: "{{ WORKAROUND_ITEM }}"
+      permanent: yes
+      immediate: yes
+      state: enabled
+    with_items:
+      - http
+      - https
+----
+
+* Open Ansible Tower
+* Kies ``Projects``
+* Ververs het project
++
+TIP: Het verversen van het project is nodig om de playbooks zichtbaar te maken in het template.
++
+* Voeg templates toe voor de nieuwe playbooks ``webservers.yml``, ``webservers-rollback.yml`` en ``loadbalancer.yml``
+** Zet de inventory voor ``webservers.yml`` op ``Webservers``
+** Zet de inventory voor ``webservers-rollback.yml`` op ``Webservers``
+** Zet de inventory voor ``loadbalancer.yml`` op ``Loadbalancer``
+
+CAUTION: Let er op dat je de ``machine`` credential toevoegt. Vergeet daarnaast niet om ``Enable privilege escalation`` aan te vinken.
+
+### Task 7.2 Workflows aanmaken
+
+* Klik ``Templates`` (linkerkant)
+* Klik rechtsboven op het groene plus teken en kies Workflow Template <workflow_01.png>
+* Geeft de workflow een ``name``, bijvoorbeeld ``Workflow``
+* Klik op ``Save``.
+* Na het opslaan opent de ``Workflow Visualizer``. Zoniet, open dan de workflow en klik rechtsboven op de knop ``Workflow Visualizer``
+* Klik op ``Start`` om de eerste node toe te voegen
+* Selecteer ``Webservers``. Laat de ``RUN`` op ``Always`` staan
++ 
+TIP: De ``RUN`` van de eerste node is altijd ``Always``
++
+* Zweef over de node ``Webservers`` en klik op de groene ``plus`` om een nieuwe node toe te voeggen
+* Selecteer ``Loadbalancer`` en zet de ``RUN`` op ``On Success``
++
+TIP: Als de installatie van de webservers niet lukt, heeft het ook geen zin om een loadbalancer te installeren. Met ``On Success`` wordt de ``loadbalancer`` pas geïnstalleerd als de installatie van de ``webservers`` succesvol was.
++
+TIP: De lijn tussen ``Webservers`` en ``Loadbalancer`` kleurt groen, om de ``On Success`` aan te geven. Blauw is ``Always`` en Rood is ``On Failure``.
++
+* Klik ``Save`` in de ``Workflow Visualizer`` (rechtsonder).
+* Vergeet niet op ``Save`` te klikken in de ``Workflow``
+
+### Task 7.3 Workflow uitvoeren
+
+* Start de ``Workflow``. Dit werkt hetzelfde als het starten van een ``Template``
+* In de details van de ``Workflow`` job zul je zien dat de beide taken 1-voor-1 uitgevoerd worden.  
++
+====
+[#workflow_01.png]
+.Workflow results
+image::workflow_01.png[workflow]
+====
+
+
+### Task 7.4 Workflow met rollback
+
+* Voer eerst de ``template`` ``Webservers Rollback`` uit, zodat de webserver gedeïnstalleerd wordt.
+* Bewerk de workflow ``Workflow``
+* Voeg achter ``Webservers`` een nieuwe node toe.
++
+NOTE: Let er op dat de node onder de loadbalancer staat
++
+* Selecteer ``Webservers Rollback`` en zet de ``RUN`` op ``On Failure``
+* Pas het playbook ``webservers.yml`` aan (op Gitlab). 
+** Bewerk de laatste task ``Check status of webserver`` 
+** Pas in de URL de ``index.html`` aan naar ``error.html``
++
+TIP: Door de index.html aan te passen naar ``error.html`` zal deze taak falen. De statuscode zal namelijk 404 (Page not found) worden, omdat ``error.html`` niet aanwezig is op de webserver.
++
+* Klik op ``Save`` in de ``Workflow Visualizer`` en de ``Template``
+* Voer de workflow uit.
+
+Als alles goed is gegaan zal eerst de webserver geinstalleerd worden, maar zal de laatste test falen. Daarna wordt de webserver installatie terug gedraaid. De job ``Loadbalancers`` zal niet uitgevoerd worden. 
+
+====
+[#workflow_02.png]
+.Workflow results
+image::workflow_02.png[workflow]
+====
+
+* Zet de URL weer terug naar ``index.html`` en voer de workflow opnieuw uit.
+
+De workflow zal nu wel goed gaan en de loadbalancer installatie uitvoeren.
+
+====
+[#workflow_03.png]
+.Workflow results
+image::workflow_03.png[workflow]
+====
+
+

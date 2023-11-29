@@ -1,0 +1,77 @@
+## Lab 9: Tower Variabelen
+
+In Ansible Tower kun je op diverse manieren variabelen gebruiken. De best-practice is om de variabelen in de ``Hosts`` en ``Groups`` van de inventory te zetten. 
+
+Het is echter ook mogelijk om de variabelen bij het playbook in de SCM te zetten. Bijkomend voordeel daarvan is dat er meteen versiebeheer aanwezig is. De variabelen worden dan gezet in de directory ``group_vars`` of ``host_vars``, net zoals je met Ansible Engine zou doen.
+
+Als laatste kunnen variabelen in een role gezet worden (ook in de SCM). Hiervoor geldt hetzelfde als voor playbooks dat er dan meteen versiebeheer aanwezig is. De variabelen worden dan geplaatst in de directories ``default`` of ``vars``.
+
+De juiste plek is dus een afweging tussen "Alles op 1 plek" in Ansible Tower, of "Onder versiebeheer" in de SCM bij het playbook of een role.
+
+### Task 9.1: Voorbereiding
+We gaan in de index.html een versie zetten. Deze versie stoppen we in een variable: ``app_version``. We kunnen dan in Ansible Tower deze variable vullen met het gewenste versienummer.
+
+* Pas in ``Gitlab`` het playbook ``webservers.yml`` de task ``Ensure index.html is installed in webserver root`` aan:
++
+[source,role=copypaste]
+----
+  - name: "Ensure index.html is installed in webserver root"
+    copy:
+      content: "This is server {{ WORKAROUND_APPVERSION }}"
+      dest: "/var/www/html/index.html"
+----
++
+NOTE: In deze taak definieren we de variable ``app_version``. We geven de variable ook een ``default`` mee, namelijk: 1. Dit zorgt er voor dat de job niet mislukt als we de variable nog niet gedefinieerd hebben. De methode die we daarvoor gebruiken heet een ``jinja2 filter``. Jinja2 is eigenlijk een taal op zich. Het wordt veel gebruikt in templates. Meer informatie over jinja2 filter vind je op: https://docs.ansible.com/ansible/latest/user_guide/playbooks_templating.html
++
+* Deploy de template in ``Ansible Tower`` (Run de job ``Webservers``)
+* Controleer het resultaat: http://{{ ANSIBLE_CLIENT_1 }}. In de output moet nu ``Version 1`` verschijnen.
+
+### Task 9.2: Host variable gebruiken
+In Ansible Tower kun je op meerdere plekken variabelen gebruiken. Één van die plekken is op een host.
+
+* Zoek bij ``Inventories``, ``Hosts`` de host ``{{ ANSIBLE_CLIENT_1 }}``. 
+* In het onderdeel ``Details`` (eerste pagina van de host) kun je in het veld ``Variables`` de variable ``app_version`` toevoegen. Laat daarbij de ``---`` staan:
++
+[source,role=copypaste]
+----
+---
+app_version: 2
+----
+* Voer de template ``Webservers`` uit en bekijk het resultaat:
+** http://{{ ANSIBLE_CLIENT_1 }}
+** http://{{ ANSIBLE_CLIENT_2 }}
+
+
+### Task 9.3 Group variable gebruiken
+De variabelen kun je natuurlijk ook op een ``Group`` definiëren.
+
+* Open ``Inventories``, ``Workshop-inventory``, ``Groups`` de groep ``Webservers``
+* Zet de variable ``app_version`` op 3 en deploy de template ``Webservers``
+* Bekijk het resultaat:
+** http://{{ ANSIBLE_CLIENT_1 }}
+** http://{{ ANSIBLE_CLIENT_2 }}
++
+[TIP]
+====
+Valt het je op dat het resultaat niet is wat je had verwacht? De ``Group`` variables blijken niet te werken op een ``Smart Inventory``. De workaround is:
+
+* Zet, in de template ``Webservers``, de inventory terug op ``Workshop-inventory``
+* Vul bij ``Limit`` de groep ``Webservers`` in, zodat het playbook alleen maar op de beide webserver uitgevoerd wordt.
+====
++
+* Bekijk opnieuw het resultaat met de bovenstaande workaround. Als alle goed is gegaan, zie je nu dat de ``host`` variable voorrang heeft op de ``group`` variable
+
+### Task 9.4: Playbook variabelen
+Ook in een ``Template`` (``Playbook``) kunnen variabelen gezet worden. 
+
+* Open de ``Template`` ``Webservers`` en zet de variable ``app_version`` op 4.
+* Deploy de template ``Webservers`` en bekijk het resultaat:
+** http://{{ ANSIBLE_CLIENT_1 }}
+** http://{{ ANSIBLE_CLIENT_2 }}
++
+TIP: Aan het versienummer is nu te zien wat voorrang heeft op elkaar: ``Host``, ``Group`` of ``Template``.
++
+TIP: Template variabelen maken het mogelijk om een playbook te hergebruiken. Je zou een universeel playbook kunnen maken voor bijvoorbeeld een firewall en dan in de variabelen van de template het poortnummer kunnen zetten.
+
+
+

@@ -1,0 +1,99 @@
+## Lab 2: Tower inventory
+
+In de Inventory worden alle hosts beschreven. Deze inventory kan met de hand gevuld worden (dit zullen we gebruiken in deze workshop). Het is echter een best-pratice om deze uit een bron automatisch te laten vullen (dynamic inventory). Enkele bronnen zijn:
+
+* Amazon EC2
+* VMware vCenter
+* Red Hat Satellite 6
+
+Naast de bestaande bronnen, is het mogelijk om zelf een inventory script te maken. Zie https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html voor meer informatie.
+
+### Task 2.1: Inventory aanmaken
+
+* Log in op Ansible Tower met de aangeleverde credentials:
+** URL: http://{{ ANSIBLE_TOWER }}
+** Gebruikersnaam: {{ ANSIBLE_USER }}
+** Wachtwoord: {{ ANSIBLE_PASSWORD }}
++
+TIP: De ``Ansible Tower`` webinterface neemt de taalinstelling over van je webbrowser. Zet deze taalinstelling op ``Engels`` voor deze workshop
++
+* Klik ``Inventories`` (linkerkant)
+* Klik rechtsboven op het groene plus teken (``Create a new inventory``) en kies ``Inventory``
++
+====
+[#inventory_01]
+.Create a new inventory
+image::inventory_01.png[inventory]
+====
++
+* Geef de inventory de naam ``Workshop-inventory``.
+* Klik ``Save`` 
++
+====
+[#inventory_02]
+.Inventory
+image::inventory_02.png[inventory]
+====
+
+### Task 2.2: Hosts toevoegen
+
+* Klik ``Hosts`` en klik op het groene plus teken (``Create a new host``)
++
+====
+[#inventory_03]
+.Create a new host
+image::inventory_03.png[inventory]
+====
++
+* Vul de hostname (volledige fqdn) van de Ansible client ({{ ANSIBLE_CLIENT_1 }} in
++
+====
+[#inventory_04]
+.Hostname
+image::inventory_04.png[inventory]
+====
++
+* Herhaal de stappen met de overige 2 Ansible clients:
+** {{ ANSIBLE_CLIENT_2}}
+** {{ ANSIBLE_CLIENT_3}}
+
+====
+[#inventory_05]
+.Hosts
+image::inventory_05.png[inventory]
+====
+
+
+### Task 2.3: Groepen definiëren
+
+We willen later playbooks uitvoeren op alleen de webservers, of de loadbalancer. Om dit onderscheid te kunnen maken, definiëren alvast de groepen ``Webservers`` en ``Loadbalancers``:
+
+* Open de inventory ``Workshop-inventory``
+* Selecteer ``Groups``
+* Voeg met het groene plusje een nieuwe group toe
+* Geef de groep de naam ``Webservers`` (``Name``)
+* Klik ``Save`` om de groep op te slaan
+* Voeg de 2 webservers toe (in het onderdeel ``Hosts``). Kies daarbij voor ``Existing Host``:
+** {{ ANSIBLE_CLIENT_1 }}
+** {{ ANSIBLE_CLIENT_2 }}
+* Maak op dezelfde manier de groep ``Loadbalancers`` aan.
+* Voeg de loadbalancer toe:
+** {{ ANSIBLE_CLIENT_3 }}
+
+### Task 2.4: Smart inventories
+
+Een smart inventory is een inventory met een deel van de hosts. Zo'n inventory maakt het later makkelijker om een playbook (``template``) op een selectie van hosts uit te voeren. Door bijvoorbeeld een ``Smart Inventory`` van de webservers te maken kun je later een playbook voor webservers op deze inventory uitvoeren. Deze selectie maak je met een filter. Je kunt Ansible ``Facts`` gebruiken, of bijvoorbeeld groepen om op te filteren. In deze workshop gaan we op de groepen filteren die we eerder hebben aangemaakt.
+
+TIP: In de praktijk worden ``Smart Inventories`` gebruikt om bijvoorbeeld een onderscheid te kunnen maken tussen Test en Productie omgevingen. Of een selectie op Active Directory domein (DMZ of Kantoor). Zo hoef je maar 1 inventory te maken en kun je toch eenvoudig een template op een bepaalde omgeving uitvoeren.
+
+* Maak een nieuwe ``Smart Inventory`` aan. Dit werkt hetzelfde als een normale ``inventory`` (zie bovenstaande taken). Kies echter ``Smart Inventory`` in plaats van ``Inventory``.
+* Geef de ``Smart Inventory`` de naam ``Webservers``
+* Klik op het vergrootglas in het veld ``Smart host filter``
+* Vul in het ``Search`` veld de filter: ``groups.name:Webservers`` en klik op het vergrootglas om de filter te activeren
+* Controleer of de 2 webservers in het zoekveld verschijnen en klik ``Save`` om het filter op te slaan.
+* Maak ook meteen een ``Smart Inventory`` aan met de naam ``Loadbalancer`` met een filter op de groep: ``groups.name:Loadbalancers``.
+
+
+
+
+
