@@ -1,5 +1,5 @@
-## Lab 6 Tower jobs
-In Ansible Tower kan een job handmatig via het onderdeel ``templates`` gestart worden. Daarnaast is het mogelijk om jobs gepland te starten door een ``schedule`` te configureren in de template.
+## Lab 6 AWX jobs
+In AWX kan een job handmatig via het onderdeel ``templates`` gestart worden. Daarnaast is het mogelijk om jobs gepland te starten door een ``schedule`` te configureren in de template.
 
 
 ### Task 6.1 Job uitvoeren
@@ -7,26 +7,14 @@ In Ansible Tower kan een job handmatig via het onderdeel ``templates`` gestart w
 * Klik ``Templates`` (linkerkant)
 * klik op het ``raket icoon``. De job start nu automatisch.
 +
-====
-[#job_01.png]
-.Start job
-image::job_01.png[job]
-====
+=====
 +
 * Aan de linkerkant vind je de details van de job
 +
 ====
-[#job_02.png]
-.Job details
-image::job_02.png[job]
-====
 +
 * Aan de rechterkant vind je het resultaat van de job
 +
-====
-[#job_03.png]
-.Job results
-image::job_03.png[job]
 ====
 +
 TIP: De output uit het result venster herken je van ``Ansible Engine``
@@ -35,13 +23,9 @@ TIP: De output uit het result venster herken je van ``Ansible Engine``
 ### Task 6.2 Job status inzien
 * Ga terug naar ``Templates`` (Linkerkant)
 * Achter de ``template`` zijn nu eén of meerdere blokjes gevuld
-+
-image::job_04.png[job]
-+
 [TIP]
 ====
 De blokjes kunnen de volgende toestanden aangeven:
-
 * Knipperend: Job heeft status ``running``
 * Groen: Job is gelukt
 * Rood: Job is mislukt
@@ -54,11 +38,7 @@ Een overzicht van alle jobs vind je terug onder ``Jobs``.
 * Kies ``Jobs`` (linkerkant)
 * In dit overzicht kun je de details van de job inzien, of de job opnieuw uitvoeren
 +
-====
-[#job_05.png]
-.Jobs
-image::job_05.png[job]
-====
+=====
 +
 * Bekijk de details van een oude job
 * Klik op een ``raket`` om een job opnieuw uit te voeren
@@ -68,7 +48,7 @@ image::job_05.png[job]
 Het type van de job wordt met een label weergegeven.
 
 * ``Playbook Run``: Een playbook
-* ``SCM Update``: Een update van het project (in deze workshop het Git project uit link:04_NL_tower_project[Lab 4])
+* ``SCM Update``: Een update van het project (in deze workshop het project uit Lab 4)
 ====
 
 ### Task 6.3 Job met andere parameters starten
@@ -90,12 +70,6 @@ Om de werking te kunnen demonstreren moeten we eerst meerdere inventories hebben
 * Voer de job opnieuw uit. De job vraagt nu om een inventory.
 * Kies ``Webservers`` en klik ``Next`` en ``Launch`` om de job uit te voeren.
 +
-====
-[#job_06.png]
-.Jobs
-image::job_06.png[job]
-====
-+
 * Controleer in de job result of de job nu alleen op de webservers ({{ ANSIBLE_CLIENT_1 }} en {{ ANSIBLE_CLIENT_2 }}) wordt uitgevoerd.
 
 ### Task 6.4 Job gepland uitvoeren
@@ -104,7 +78,7 @@ Het is mogelijk om templates periodiek uit te voeren. In de praktijk wordt dit b
 * Bewerk de ``template``
 * Zet bij ``Inventory`` het vinkje ``Prompt on Launch`` weer uit
 +
-CAUTION: Vergeet niet om ``Pompt on Launch`` uit te zetten!
+CAUTION: Vergeet niet om ``Prompt on Launch`` uit te zetten!
 +
 * Klik ``Save``
 * Open de template opnieuw
