@@ -17,7 +17,7 @@ In AWX kun je, net als Ansible Engine, roles gebruiken om je playbooks te vereen
     - name: web1
       address: {{ ANSIBLE_CLIENT_1 }}:80
     - name: web2
-      address: {{ ANSIBLE_CLIENT_2}}:80
+      address: {{ ANSIBLE_CLIENT_2 }}:80
 
   roles:
   - { role: geerlingguy.haproxy }
