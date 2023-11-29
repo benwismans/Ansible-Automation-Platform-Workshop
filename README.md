@@ -1,4 +1,4 @@
-# Ansible-Tower-Workshop
+# AWX-Workshop
 Deze workshop is gebaseerd op Ansible Tower / AWX 4.0.
 
 ### Contents
