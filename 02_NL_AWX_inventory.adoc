@@ -1,4 +1,4 @@
-## Lab 2: Tower inventory
+## Lab 2: AWX inventory
 
 In de Inventory worden alle hosts beschreven. Deze inventory kan met de hand gevuld worden (dit zullen we gebruiken in deze workshop). Het is echter een best-practice om deze uit een bron automatisch te laten vullen (dynamic inventory). Enkele bronnen zijn:
 
