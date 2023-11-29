@@ -2,7 +2,6 @@
 Deze workshop is gebaseerd op Ansible Tower / AWX 4.0.
 
 ### Contents
-0. [Introductie](labs/00_NL_introduction.md)
 1. [SCM inrichten](01_NL_SCM.adoc)
 2. [Tower inventory aanmaken](labs/02_NL_tower_inventory.md)
 3. [Tower credential aanmaken](labs/03_NL_tower_credential.md)
