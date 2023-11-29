@@ -1,10 +1,10 @@
-## Lab 11: Tower Vault
+## Lab 11: AWX Vault
 
-In Ansible Tower is het uiteraard mogelijk om ``Ansible Vault`` te gebruiken om met gevoellige gegevens te werken.
+In AWX is het uiteraard mogelijk om ``Ansible Vault`` te gebruiken om met gevoellige gegevens te werken.
 
 ### Task 11.1: Voorbereiding
 
-* Maak op ``Gitlab`` een nieuw playbook ``webserver-secure.yml`` aan:
+* Maak op ``Azure Devops`` een nieuw playbook ``webserver-secure.yml`` aan:
 +
 [source,role=copypaste]
 ----
@@ -49,7 +49,7 @@ In Ansible Tower is het uiteraard mogelijk om ``Ansible Vault`` te gebruiken om 
 
 In ``Ansible Tower``:
 
-* Ververs het project ``Gitlab``
+* Ververs het project ``Azure Devops``
 * Maak een nieuwe template ``Webservers secure``:
 ** Inventory: ``Webservers``
 ** Playbook: ``webserver-secure.yml``
