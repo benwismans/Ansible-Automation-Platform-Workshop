@@ -1,32 +1,31 @@
 ## Lab 1: SCM inrichten
 
-Het is een best-practice om Ansible Tower te gebruiken in combinatie met een ``SCM`` (Source Control Management). Enkele voorbeelden zijn:
+Het is een best-practice om AWX te gebruiken in combinatie met een ``SCM`` (Source Control Management). Enkele voorbeelden zijn:
 
 * Git
 * Subversion
 * Azure Devops
 
-Alle playbooks, roles etc. van Ansible worden in deze ``SCM`` gezet. Ansible Tower download dan automatisch de laatste versie van het project, voordat een playbook wordt gestart. Bijkomend voordeel van een SCM is dat alle wijzigingen inzichtelijk zijn (wie heeft wat, wanneer gewijzigd).
+Alle playbooks, roles etc. van Ansible worden in deze ``SCM`` gezet. AWX download dan automatisch de laatste versie van het project, voordat een playbook wordt gestart. Bijkomend voordeel van een SCM is dat alle wijzigingen inzichtelijk zijn (wie heeft wat, wanneer gewijzigd).
 
-### Task 1.1: Gitlab inrichten
+### Task 1.1: Azure Devops inrichten
 
-In deze workshop gebruiken we Gitlab. Gitlab kan zowel online als on-premise gebruikt worden. De werking is beide hetzelfde. Een Free account op https://gitlab.com (online) is voor deze workshop ruim voldoende.
+In deze workshop gebruiken we Azure DevOps. De werking is beide hetzelfde. 
 
-* Maak een account aan op https://gitlab.com/users/sign_in#register-pane. Mocht je al reeds een account hebben, dan kun je deze uiteraard gewoon gebruiken voor deze workshop. 
-* Log in met je nieuwe gitlab account
+* Maak een account aan op ??? (URL van Klant). Mocht je al reeds een account hebben, dan kun je deze uiteraard gewoon gebruiken voor deze workshop. 
+* Log in met je Azure AD account
 * Klik rechtsboven op ``New Project`` 
-* Geef het project een naam (bijvoorbeeld ``ansible-tower``)
-* Laat de Visibility level op ``Private`` staan. 
+* Geef het project een naam (bijvoorbeeld ``awx-workshop``)
 
-TIP: We maken later een credential aan waarmee Ansible Tower verbinding kan maken met Gitlab.
+TIP: We maken later een credential aan waarmee AWX verbinding kan maken met Azure DevOps.
 
-### Task 1.2: Gitlab Deploy Token aanmaken
+### Task 1.2: Azure DevOps Deploy Token aanmaken
 
-Na het aanmaken van het project, wordt dit project automatisch geopend (Open anders het project via ``Projects`` (menu bovenin), ``Your Projects``). In het project maken we een deploy token aan, die we later gebruiken om Ansible Tower toegang te geven tot de Git Repository.
+Na het aanmaken van het project, wordt dit project automatisch geopend (Open anders het project via ``Projects`` (menu bovenin), ``Your Projects``). In het project maken we een deploy token aan, die we later gebruiken om AWX toegang te geven tot de Git Repository.
 
 * Klik ``Settings`` aan de linkerkant en kies ``Repository``.
 * Klik ``Expand`` achter ``Deploy Tokens``
-* Geef de token een naam (Bijvoorbeeld ``ansible-tower``)
+* Geef de token een naam (Bijvoorbeeld ``awx-workshop-token``)
 * Vink onder ``Scopes`` ``read_repository`` aan.
 * Klik ``Create deploy token``
 * Noteer de gegevens van de nieuwe token:
@@ -37,7 +36,7 @@ CAUTION: De Deploy Token Password is **eenmalig zichtbaar**. Noteer deze dus goe
 
 ### Task 1.3: Repository URL
 
-De repository URL hebben we later nodig voor de koppeling in Ansible Tower.
+De repository URL hebben we later nodig voor de koppeling in AWX.
 
 In je project:
 
@@ -46,7 +45,7 @@ In je project:
 
 ### Task 1.4: Hello world playbook aanmaken
 
-We maken alvast een "Hello world" playbook aan, waarmee we later de basis functionaliteit van Ansible Tower kunnen testen. 
+We maken alvast een "Hello world" playbook aan, waarmee we later de basis functionaliteit van AWX kunnen testen. 
 
 In je project:
 
@@ -68,10 +67,6 @@ In je project:
 +
 TIP: Let goed op de uitlijning met spaties!
 +
-====
-[#gitlab_02]
-.Gitlab
-image::gitlab_02.png[gitlab]
 ====
 
 * Klik ``Commit changes`` om de wijzigingen op te slaan
