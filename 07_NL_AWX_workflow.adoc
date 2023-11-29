@@ -1,4 +1,4 @@
-## Lab 7 Tower workflows
+## Lab 7 AWX Workflows
 In Ansible Tower kunnen templates gecombineerd worden tot een workflow. In deze workflow is vervolgens te definieren wanneer de volgende job uitgevoerd dient te worden. De 3 opties daarvoor zijn:
 
 * Always
@@ -12,7 +12,7 @@ Het is bijvoorbeeld mogelijk om een job te starten. Afhankelijk van de uitkomst 
 
 Voordat we een workflow kunnen maken, hebben we meerdere ``templates`` (playbooks) nodig:
 
-* Log in op ``Gitlab`` en voeg de volgende 3 files toe (Kijk eventueel terug in link:01_NL_gitlab[Lab 1]):
+* Log in op ``Gitlab`` en voeg de volgende 3 files toe (Kijk eventueel terug in Lab 1):
 * ``webservers.yml``
 +
 [source,role=copypaste]
@@ -159,12 +159,6 @@ TIP: De lijn tussen ``Webservers`` en ``Loadbalancer`` kleurt groen, om de ``On 
 * Start de ``Workflow``. Dit werkt hetzelfde als het starten van een ``Template``
 * In de details van de ``Workflow`` job zul je zien dat de beide taken 1-voor-1 uitgevoerd worden.  
 +
-====
-[#workflow_01.png]
-.Workflow results
-image::workflow_01.png[workflow]
-====
-
 
 ### Task 7.4 Workflow met rollback
 
@@ -186,20 +180,8 @@ TIP: Door de index.html aan te passen naar ``error.html`` zal deze taak falen. D
 
 Als alles goed is gegaan zal eerst de webserver geinstalleerd worden, maar zal de laatste test falen. Daarna wordt de webserver installatie terug gedraaid. De job ``Loadbalancers`` zal niet uitgevoerd worden. 
 
-====
-[#workflow_02.png]
-.Workflow results
-image::workflow_02.png[workflow]
-====
-
 * Zet de URL weer terug naar ``index.html`` en voer de workflow opnieuw uit.
 
 De workflow zal nu wel goed gaan en de loadbalancer installatie uitvoeren.
-
-====
-[#workflow_03.png]
-.Workflow results
-image::workflow_03.png[workflow]
-====
 
 
