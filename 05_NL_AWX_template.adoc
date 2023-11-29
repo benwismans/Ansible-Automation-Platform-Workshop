@@ -1,4 +1,4 @@
-## Lab 5: Tower Template aanmaken
+## Lab 5: AWX Template aanmaken
 
 In een template komen alle onderdelen samen tot een job die gestart kan worden. Daarvoor zijn de volgende onderdelen nodig:
 
@@ -7,7 +7,7 @@ In een template komen alle onderdelen samen tot een job die gestart kan worden. 
 * Playbook
 * Credentials
 
-TIP: Voor de meeste onderdelen van de template kun je "Prompt on Launch" aanzetten. Ansible Tower vraagt dan bij het starten van de ``job`` om deze gegevens in te vullen. Dit kan handig zijn als er bijvoorbeeld verschillende credentials gebruikt worden voor groepen clients. 
+TIP: Voor de meeste onderdelen van de template kun je "Prompt on Launch" aanzetten. AWX vraagt dan bij het starten van de ``job`` om deze gegevens in te vullen. Dit kan handig zijn als er bijvoorbeeld verschillende credentials gebruikt worden voor groepen clients. 
 
 In de template kunnen nog wat "last-minute" variablen aangepast worden. 
 
@@ -18,26 +18,20 @@ In de template kunnen nog wat "last-minute" variablen aangepast worden.
 * Geef de template een ``Name``, bijvoorbeeld: ``Hello world``
 * Zet de ``Job Type`` op ``Run``
 * Selecteer de ``Inventory``: ``Workshop-inventory``.
-* Kies het ``Project`` uit link:04_NL_tower_project[Lab 4]
+* Kies het ``Project`` uit Lab 4
 * In het project moet het playbook ``hello-world.yml`` zichtbaar zijn. 
 +
 [TIP]
 ====
 Als het playbook ``hello-world.yml`` niet zichtbaar is, controleer dan de volgende onderdelen:
 
-* Controleer of je in link:01_NL_gitlab[Lab 1] in ``Task 1.4`` het playbook goed hebt aangemaakt
-* Controleer of je het Gitlab project in link:04_NL_tower_project[Lab 4] goed hebt geconfigureerd
+* Controleer of je in Lab 1 in ``Task 1.4`` het playbook goed hebt aangemaakt
+* Controleer of je het project in Lab 4 goed hebt geconfigureerd
 ====
 +
-* Zet de ``Credential`` op de machine credential uit link:03_NL_tower_credential[Lab 3]
+* Zet de ``Credential`` op de machine credential uit Lab 3
 +
 TIP: In de praktijk kan het voorkomen dat je meerdere credentials nodig hebt om een template / job succesvol uit te kunnen voeren. Bijvoorbeeld een ``vault`` credential om encrypted data te ontsleutelen. Je kunt daarom meerdere credentials opgeven als dat nodig is.
 +
 * Klik ``Save`` om de template op te slaan
-
-====
-[#template_01.png]
-.Template
-image::template_01.png[template]
-====
 
