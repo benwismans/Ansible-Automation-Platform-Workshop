@@ -1,4 +1,4 @@
-## Lab 9: A Variabelen
+## Lab 9: AWX Variabelen
 
 In AWX kun je op diverse manieren variabelen gebruiken. De best-practice is om de variabelen in de ``Hosts`` en ``Groups`` van de inventory te zetten. 
 
