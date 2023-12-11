@@ -10,33 +10,32 @@ Alle playbooks, roles etc. van Ansible worden in deze ``SCM`` gezet. AWX downloa
 
 ### Task 1.1: Azure Devops inrichten
 
-In deze workshop gebruiken we Azure DevOps. De werking is beide hetzelfde. 
-
-* Maak een account aan op ??? (URL van Klant). Mocht je al reeds een account hebben, dan kun je deze uiteraard gewoon gebruiken voor deze workshop. 
-* Log in met je Azure AD account
-* Klik rechtsboven op ``New Project`` 
-* Geef het project een naam (bijvoorbeeld ``awx-workshop``)
-
-TIP: We maken later een credential aan waarmee AWX verbinding kan maken met Azure DevOps.
+In deze workshop gebruiken we Azure DevOps. Zie de mail van Danny! Als het goed is heeft iedereen een eigen Lab aangemaakt. 
 
 ### Task 1.2: Azure DevOps Deploy Token aanmaken
 
-Na het aanmaken van het project, wordt dit project automatisch geopend (Open anders het project via ``Projects`` (menu bovenin), ``Your Projects``). In het project maken we een deploy token aan, die we later gebruiken om AWX toegang te geven tot de Git Repository.
+Het Deploy Token is nodig om een koppeling te maken tussen AWX en je Azure DevOps Lab.
 
-* Klik ``Settings`` aan de linkerkant en kies ``Repository``.
-* Klik ``Expand`` achter ``Deploy Tokens``
-* Geef de token een naam (Bijvoorbeeld ``awx-workshop-token``)
-* Vink onder ``Scopes`` ``read_repository`` aan.
-* Klik ``Create deploy token``
-* Noteer de gegevens van de nieuwe token:
-** Deploy Token username
-** Deploy Token Password
-+
+Onderstaande stappen komen uit: https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows
+
+- Sign in to your organization (https://dev.azure.com/{yourorganization}).
+
+- From your home page, open user settings  and select Personal access tokens.
+
+- Select + New Token.
+ 
+- Name your token, select the organization where you want to use the token, and then set your token to automatically expire after a set number of days.
+
+- Select the scopes for this token to authorize for your specific tasks. (Kies hier Full Access)
+
+- When you're done, copy the token and store it in a secure location. For your security, it doesn't display again.
+
+
 CAUTION: De Deploy Token Password is **eenmalig zichtbaar**. Noteer deze dus goed! Mocht je het wachtwoord later kwijt zijn, dan zul je de token opnieuw aan moeten maken (en krijgt deze dus een nieuw wachtwoord).
 
-### Task 1.3: Repository URL
+### Task 1.3: Repository URL 
 
-De repository URL hebben we later nodig voor de koppeling in AWX.
+De repository URL hebben we later nodig voor de koppeling in AWX. Onderstaande is hoe het werk met github, en nog niet getest met Azure DevOps.
 
 In je project:
 
