@@ -20,24 +20,17 @@ TIP: De ``AWX`` webinterface neemt de taalinstelling over van je webbrowser. Zet
 +
 * Klik ``Inventories`` (linkerkant)
 * Klik rechtsboven op het groene plus teken (``Create a new inventory``) en kies ``Inventory``
-+
-====
-+
+
 * Geef de inventory de naam ``Workshop-inventory``.
 * Klik ``Save`` 
-+
+
 ====
 
 ### Task 2.2: Hosts toevoegen
 
 * Klik ``Hosts`` en klik op het groene plus teken (``Create a new host``)
-+
-====
-+
+
 * Vul de hostname (volledige fqdn) van de Ansible client in
-+
-====
-+
 * Herhaal de stappen met de overige 2 Ansible clients:
 ** 
 ** 
