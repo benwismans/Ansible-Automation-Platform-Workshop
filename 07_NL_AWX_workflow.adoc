@@ -49,6 +49,7 @@ Voordat we een workflow kunnen maken, hebben we meerdere ``templates`` (playbook
 
   - name: "Check the status of the webserver"
     local_action:
+    become: false
       module: uri
       url: "http://{{ inventory_hostname }}/index.html"
       status_code: 200            
