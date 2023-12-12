@@ -18,7 +18,7 @@ Voordat we een workflow kunnen maken, hebben we meerdere ``templates`` (playbook
 [source,role=copypaste]
 ----
 ---
-- hosts: all
+- hosts: "{{ target_host }}"
 
   tasks:
   - name: "Ensure apache is installed"
