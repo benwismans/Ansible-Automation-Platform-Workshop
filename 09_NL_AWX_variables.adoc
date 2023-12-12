@@ -21,7 +21,7 @@ We gaan in de index.html een versie zetten. Deze versie stoppen we in een variab
       dest: "/var/www/html/index.html"
 ----
 +
-* Zet in AWX bij het onderdeel ``Details`` (eerste pagina van de host) kun je in het veld ``Variables`` de variable ``app_version`` toevoegen. Laat daarbij de ``---`` staan:
+* Zet in AWX bij het template bij het onderdeel ``Details`` (eerste pagina van de host) kun je in het veld ``Variables`` de variable ``app_version`` toevoegen. Laat daarbij de ``---`` staan:
 +
 [source,role=copypaste]
 ----
