@@ -29,7 +29,7 @@
 
   - name: "Ensure firewall is configured"
     firewalld:
-      service: "{{ WORKAROUND_ITEM }}"
+      service: "{{ item }}"
       permanent: yes
       immediate: yes
       state: enabled
@@ -41,7 +41,7 @@
 
   - name: "Ensure index.html is installed in webserver root"
     copy:
-      content: "This is server {{ WORKAROUND_FQDN }}"
+      content: "This is server {{ ansible_fqdn }}"
       dest: "/var/www/html/index.html"
     tags: 
     - webserver  
@@ -49,7 +49,7 @@
   - name: "Check the status of the webserver"
     local_action:
       module: uri
-      url: "http://{{ WORKAROUND_INVENTORY_HOSTNAME }}/index.html"
+      url: "http://{{ inventory_hostname }}/index.html"
       status_code: 200            
     tags: 
     - webserver  
@@ -71,7 +71,7 @@
 
   - name: "Ensure the firewall rules are removed"
     firewalld:
-      service: "{{ WORKAROUND_ITEM }}"
+      service: "{{ item }}"
       permanent: yes
       immediate: yes
       state: disabled
@@ -105,7 +105,7 @@
 
   - name: "Ensure firewall is configured"
     firewalld:
-      service: "{{ WORKAROUND_ITEM }}"
+      service: "{{ item }}"
       permanent: yes
       immediate: yes
       state: enabled
