@@ -34,7 +34,7 @@ Voordat we een workflow kunnen maken, hebben we meerdere ``templates`` (playbook
 
   - name: "Ensure firewall is configured"
     firewalld:
-      service: "{{ WORKAROUND_ITEM }}"
+      service: "{{ item }}"
       permanent: yes
       immediate: yes
       state: enabled
@@ -44,13 +44,13 @@ Voordat we een workflow kunnen maken, hebben we meerdere ``templates`` (playbook
 
   - name: "Ensure index.html is installed in webserver root"
     copy:
-      content: "This is server {{ WORKAROUND_FQDN }}"
+      content: "This is server {{ ansible_fqdn }}"
       dest: "/var/www/html/index.html"
 
   - name: "Check the status of the webserver"
     local_action:
       module: uri
-      url: "http://{{ WORKAROUND_INVENTORY_HOSTNAME }}/index.html"
+      url: "http://{{ inventory_hostname }}/index.html"
       status_code: 200            
 ----
 +
@@ -75,7 +75,7 @@ Voordat we een workflow kunnen maken, hebben we meerdere ``templates`` (playbook
 
   - name: "Ensure the firewall rules are removed"
     firewalld:
-      service: "{{ WORKAROUND_ITEM }}"
+      service: "{{ item }}"
       permanent: yes
       immediate: yes
       state: disabled
@@ -110,7 +110,7 @@ Voordat we een workflow kunnen maken, hebben we meerdere ``templates`` (playbook
 
   - name: "Ensure firewall is configured"
     firewalld:
-      service: "{{ WORKAROUND_ITEM }}"
+      service: "{{ item }}"
       permanent: yes
       immediate: yes
       state: enabled
