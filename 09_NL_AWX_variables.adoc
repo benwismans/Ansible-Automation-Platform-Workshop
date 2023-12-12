@@ -17,7 +17,7 @@ We gaan in de index.html een versie zetten. Deze versie stoppen we in een variab
 ----
   - name: "Ensure index.html is installed in webserver root"
     copy:
-      content: "This is server {{ WORKAROUND_APPVERSION }}"
+      content: "This is server {{ app_version }}"
       dest: "/var/www/html/index.html"
 ----
 +
