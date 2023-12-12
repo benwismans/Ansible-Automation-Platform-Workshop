@@ -28,7 +28,6 @@ We gaan in de index.html een versie zetten. Deze versie stoppen we in een variab
 ---
 app_version: 1
 ----
-NOTE: In deze taak definieren we de variable ``app_version``. Dit zorgt er voor dat de job niet mislukt als we de variable nog niet gedefinieerd hebben. De methode die we daarvoor gebruiken heet een ``jinja2 filter``. Jinja2 is eigenlijk een taal op zich. Het wordt veel gebruikt in templates. Meer informatie over jinja2 filter vind je op: https://docs.ansible.com/ansible/latest/user_guide/playbooks_templating.html
 +
 * Deploy de template in ``Ansible Tower`` (Run de job ``Webservers``)
 * Controleer het resultaat: http://{{ ANSIBLE_CLIENT_1 }}. In de output moet nu ``Version 1`` verschijnen.
