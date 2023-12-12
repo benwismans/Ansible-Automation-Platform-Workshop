@@ -4,7 +4,7 @@ In AWX kun je, net als Ansible Engine, roles gebruiken om je playbooks te vereen
 
 ### Task 8.1 Playbook met role toevoegen
 
-* Log in op ``Azure Devops`` en voeg de volgende 2 files toe (Kijk eventueel terug in Lab 1):
+* Log in op ``Azure Devops`` en voeg de volgende 2 files toe (Kijk eventueel terug in Lab 1), let op dat je de hostnames van je webservers invult bij address:
 * ``loadbalancer-role.yml``:
 +
 [source,role=copypaste]
@@ -15,9 +15,9 @@ In AWX kun je, net als Ansible Engine, roles gebruiken om je playbooks te vereen
   vars:
     haproxy_backend_servers:
     - name: web1
-      address: {{ ANSIBLE_CLIENT_1 }}:80
+      address: <webserver-hostname-01>:80
     - name: web2
-      address: {{ ANSIBLE_CLIENT_2 }}:80
+      address: <webserver-hostname-02>:80
 
   roles:
   - { role: geerlingguy.haproxy }
