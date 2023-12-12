@@ -46,6 +46,8 @@ Voordat we een workflow kunnen maken, hebben we meerdere ``templates`` (playbook
     copy:
       content: "This is server {{ ansible_fqdn }}"
       dest: "/var/www/html/index.html"
+      owner: apache
+      group: apache
 
   - name: "Check the status of the webserver"
     local_action:
