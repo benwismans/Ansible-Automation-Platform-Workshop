@@ -10,7 +10,7 @@ In AWX kun je, net als Ansible Engine, roles gebruiken om je playbooks te vereen
 [source,role=copypaste]
 ----
 ---
-- hosts: all
+- hosts: "{{ target_host }}"
 
   vars:
     haproxy_backend_servers:
