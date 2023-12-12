@@ -37,7 +37,7 @@ In AWX kun je, net als Ansible Engine, roles gebruiken om je playbooks te vereen
 TIP: Het verversen van het project is nodig om de playbooks zichtbaar te maken in het template.
 +
 * Voeg templates toe voor het nieuwe playbook ``loadbalancer-role.yml``
-** Zet de inventory voor ``loadbalancer-role.yml`` op ``Loadbalancer``
+** Zet de inventory goed voor ``loadbalancer-role.yml``
 +
 CAUTION: Let er op dat je de ``machine`` credential toevoegt. Vergeet daarnaast niet om ``Enable privilege escalation`` aan te vinken.
 
