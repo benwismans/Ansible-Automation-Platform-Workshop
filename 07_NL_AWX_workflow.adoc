@@ -59,7 +59,7 @@ Voordat we een workflow kunnen maken, hebben we meerdere ``templates`` (playbook
 [source,role=copypaste]
 ----
 ---
-- hosts: all
+- hosts: "{{ target_host }}"
 
   tasks:
   - name: "Ensure index.html is removed from the webserver root"
@@ -94,7 +94,7 @@ Voordat we een workflow kunnen maken, hebben we meerdere ``templates`` (playbook
 [source,role=copypaste]
 ----
 ---
-- hosts: all
+- hosts: "{{ target_host }}"
 
   tasks:
   - name: "Ensure haproxy is installed"
