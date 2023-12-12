@@ -33,7 +33,7 @@ In AWX is het uiteraard mogelijk om ``Ansible Vault`` te gebruiken om met gevoel
 
   - name: "Ensure firewall is configured"
     firewalld:
-      service: "{{ WORKAROUND_ITEM }}"
+      service: "{{ item }}"
       permanent: yes
       immediate: yes
       state: enabled
@@ -43,7 +43,7 @@ In AWX is het uiteraard mogelijk om ``Ansible Vault`` te gebruiken om met gevoel
 
   - name: "Ensure index.html is installed in webserver root"
     copy:
-      content: "{{ WORKAROUND_CONTENT }}"
+      content: "{{ content }}"
       dest: "/var/www/html/secure.html"
 ----
 
