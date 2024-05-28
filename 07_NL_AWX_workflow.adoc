@@ -161,7 +161,6 @@ TIP: De lijn tussen ``Webservers`` en ``Loadbalancer`` kleurt groen, om de ``On 
 
 * Start de ``Workflow``. Dit werkt hetzelfde als het starten van een ``Template``
 * In de details van de ``Workflow`` job zul je zien dat de beide taken 1-voor-1 uitgevoerd worden.  
-+
 
 ### Task 7.4 Workflow met rollback
 
