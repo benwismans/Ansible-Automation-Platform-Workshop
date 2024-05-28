@@ -147,7 +147,7 @@
     - ntp
 ----
 
-=== Task 10.2: Template in Tower
+=== Task 10.2: Template in AWX
 
 * Maak een ``Job template`` aan: ``Webserver tags``
 ** Inventory: ``Webservers``
