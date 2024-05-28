@@ -22,8 +22,7 @@ De blokjes kunnen de volgende toestanden aangeven:
 * Knipperend: Job heeft status ``running``
 * Groen: Job is gelukt
 * Rood: Job is mislukt
-====
-+
+
 * Klik op een ``groen`` of ``rood`` blokje om de details van die job in te zien.
 
 Een overzicht van alle jobs vind je terug onder ``Jobs``.
