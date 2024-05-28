@@ -50,7 +50,8 @@
     local_action:
       module: uri
       url: "http://{{ inventory_hostname }}/index.html"
-      status_code: 200            
+      status_code: 200   
+    become: false
     tags: 
     - webserver  
 
