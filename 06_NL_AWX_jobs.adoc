@@ -6,17 +6,10 @@ In AWX kan een job handmatig via het onderdeel ``templates`` gestart worden. Daa
 
 * Klik ``Templates`` (linkerkant)
 * klik op het ``raket icoon``. De job start nu automatisch.
-+
-=====
-+
+
 * Aan de linkerkant vind je de details van de job
-+
-====
-+
 * Aan de rechterkant vind je het resultaat van de job
-+
-====
-+
+
 TIP: De output uit het result venster herken je van ``Ansible Engine``
 * Als alles goed is gegaan, dan is de status ``Successful``
 
