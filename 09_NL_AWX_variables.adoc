@@ -41,8 +41,8 @@ In Ansible Tower kun je op meerdere plekken variabelen gebruiken. Één van die 
 app_version: 2
 ----
 * Voer de template ``Webservers`` uit en bekijk het resultaat:
-** http://{{ ANSIBLE_CLIENT_1 }}
-** http://{{ ANSIBLE_CLIENT_2 }}
+** http:// {{ ANSIBLE_CLIENT_1 }}
+** http:// {{ ANSIBLE_CLIENT_2 }}
 
 
 ### Task 9.3 Group variable gebruiken
@@ -51,8 +51,8 @@ De variabelen kun je natuurlijk ook op een ``Group`` definiëren.
 * Open ``Inventories``, ``Workshop-inventory``, ``Groups`` de groep ``Webservers``
 * Zet de variable ``app_version`` op 3 en deploy de template ``Webservers``
 * Bekijk het resultaat:
-** http://{{ ANSIBLE_CLIENT_1 }}
-** http://{{ ANSIBLE_CLIENT_2 }}
+** http:// {{ ANSIBLE_CLIENT_1 }}
+** http:// {{ ANSIBLE_CLIENT_2 }}
 +
 [TIP]
 ====
