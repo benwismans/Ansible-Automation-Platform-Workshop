@@ -71,7 +71,7 @@ Note: Het type ``Vault`` staat op de 3e pagina
 * Gebruik het ``Vault password``: ``workshop``
 * In de ``Template`` ``Webserver secure`` kun je nu de ``Credential`` ``Vault`` toevoegen. Zet daarvoor de ``Credential Type`` op ``Vault``.
 * Voer de template uit
-* Als alles goed is gegaan dan moet op deze URL de geheime boodschap verschijnen: http://{{ ANSIBLE_CLIENT_1 }}/secure.html
+* Als alles goed is gegaan dan moet op deze URL de geheime boodschap verschijnen: http:// {{ ANSIBLE_CLIENT_1 }}/secure.html
 
 [TIP]
 ====
