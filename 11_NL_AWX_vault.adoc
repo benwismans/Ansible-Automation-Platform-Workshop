@@ -43,7 +43,7 @@ In AWX is het uiteraard mogelijk om ``Ansible Vault`` te gebruiken om met gevoel
 
   - name: "Ensure index.html is installed in webserver root"
     copy:
-      content: "{{ content }}"
+      content: "{{ content_encrypted }}"
       dest: "/var/www/html/secure.html"
 ----
 
