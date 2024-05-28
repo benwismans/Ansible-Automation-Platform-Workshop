@@ -57,7 +57,7 @@ In je project:
 ----
 ---
 - name: Hello World Sample
-  hosts: "{{ target_host }}"
+  hosts: all
   tasks:
   - name: Hello Message
     debug:
