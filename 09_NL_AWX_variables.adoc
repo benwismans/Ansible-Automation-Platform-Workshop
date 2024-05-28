@@ -69,8 +69,8 @@ Ook in een ``Template`` (``Playbook``) kunnen variabelen gezet worden.
 
 * Open de ``Template`` ``Webservers`` en zet de variable ``app_version`` op 4.
 * Deploy de template ``Webservers`` en bekijk het resultaat:
-** http://{{ ANSIBLE_CLIENT_1 }}
-** http://{{ ANSIBLE_CLIENT_2 }}
+** http:// {{ ANSIBLE_CLIENT_1 }}
+** http:// {{ ANSIBLE_CLIENT_2 }}
 +
 TIP: Aan het versienummer is nu te zien wat voorrang heeft op elkaar: ``Host``, ``Group`` of ``Template``.
 +
