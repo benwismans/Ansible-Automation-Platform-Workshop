@@ -30,9 +30,7 @@ Een overzicht van alle jobs vind je terug onder ``Jobs``.
 
 * Kies ``Jobs`` (linkerkant)
 * In dit overzicht kun je de details van de job inzien, of de job opnieuw uitvoeren
-+
-=====
-+
+
 * Bekijk de details van een oude job
 * Klik op een ``raket`` om een job opnieuw uit te voeren
 
